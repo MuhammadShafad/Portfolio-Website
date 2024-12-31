@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/34a294b7be.js" crossorigin="anonymous"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 50;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+
+        /*Skill section*/
+        .circle {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#fbbf24 calc(var(--percentage) * 1%), #1f2937 0);
+        }
+
+        .circle::before {
+            content: attr(data-percentage) '%';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.25rem;
+            color: #fff;
+        }
+
+        /*Project Section*/
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        /*Certificate Section*/
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            /* Increased image size */
+            height: 250px;
+            /* Increased image height */
+        }
+
+        .overlay1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .image-container:hover .overlay1 {
+            opacity: 1;
+        }
+
+        .fade-in1 {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn1 {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex h-screen">
+
+        <!-- Navbar -->
+        <div class="sidebar w-64 bg-black text-white p-6 space-y-6 md:static md:transform-none">
+            <div class="flex flex-col items-center">
+                <a href="#home">
+                    <img src="./images/logo.jpg" alt="Profile Picture"
+                        class="w-24 h-24 rounded-full border-4 border-gray-700">
+                </a>
+                <h1 class="text-xl font-semibold mt-4">Muhammad Shafad</h1>
+            </div>
+            <div class="flex justify-center space-x-4 text-gray-400">
+                <a href="https://github.com/MuhammadShafad" class="hover:text-white"><i
+                        class="fa-brands fa-github"></i></a>
+                <!-- <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a> -->
+                <a href="https://www.instagram.com/shafaaad_/" class="hover:text-white"><i
+                        class="fa-brands fa-instagram"></i></a>
+                <a href="https://wa.me/919074505209" class="hover:text-white whatsapp-link"><i
+                        class="fa-brands fa-whatsapp"></i></i></a>
+                <a href="https://www.linkedin.com/in/muhammadshafadkk/" class="hover:text-white"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            </div>
+            <nav class="mt-6">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="#home" class="flex items-center space-x-3 hover:text-gray-300">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="flex items-center space-x-4 hover:text-gray-300">
+                            <i class="fa-solid fa-user"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skills" class="flex items-center space-x-4 hover:text-gray-300">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <span>Skills</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="flex items-center space-x-2.5 hover:text-gray-300">
+                            <i class="fa-solid fa-code"></i>
+                            <span>Projects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#certificates" class="flex items-center space-x-4 hover:text-gray-300">
+                            <i class="fa-regular fa-file"></i>
+                            <span>Certificates</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="flex items-center space-x-3 hover:text-gray-300">
+                            <i class="fa-regular fa-address-book"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto bg-gray-500">
+            <!--Home Section-->
+
+            <div class="p-4" id="home">
+                <!-- Toggle Button -->
+                <button class="md:hidden p-2 bg-gray-800 text-white rounded" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="flex flex-col md:flex-row items-center justify-center min-h-screen">
+                    <div class="w-full md:w-1/2 flex justify-center">
+                        <img src="./images/shafad.jpg" alt="Shafad photo" class="rounded-lg shadow-lg"
+                            style="width: 90%; height: 600px;">
+                    </div>
+                    <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8 text-center md:text-left">
+                        <h1 class="text-4xl md:text-4xl font-bold custom-font">I'm Muhammad Shafad K.K,</h1>
+                        <h2 class="text-2xl md:text-3xl font-semibold custom-font">Web Developer</h2>
+                        <h3 class="text-xl md:text-2xl font-semibold custom-font">from Kerala, India.</h3>
+                        <p class="mt-4 text-white">I am currently MEARN Full Stack Intern. Feel free to see my official
+                            portfolio website.</p>
+                        <a href="./documents/resume.pdf"
+                            class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                            download><i class="fa-solid fa-download"></i> DOWNLOAD CV</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--About Section-->
+            <div class="bg-gray-50 flex justify-center items-center min-h-screen p-4 bg-gray-500" id="about">
+                <!-- Card Section -->
+                <div
+                    class="relative bg-white shadow-lg rounded-lg p-8 md:flex md:space-x-8 max-w-5xl w-full transition-transform duration-300 hover:shadow-2xl hover:-translate-y-2">
+                    <!-- "About Me" Heading -->
+                    <div class="absolute top-0 left-0 bg-black text-white text-lg font-bold px-4 py-3 rounded-tr-lg">
+                        About Me
+                    </div>
+
+                    <!-- Left Section -->
+                    <div class="md:w-1/3 mt-10">
+                        <ul class="text-lg space-y-4 text-gray-600">
+                            <li><strong>Birthday:</strong> December 12, 2004</li>
+                            <li><strong>Age:</strong> 20</li>
+                            <li><strong>Address:</strong> Kandappankuzhi(HO),Karalmanna(PO),<p>
+                                    Cherpulassery,Palakkad,Kerala</p>
+                            </li>
+                            <li><strong>Email:</strong> <a href="mailto:muhammadshafad445@gmail.com"
+                                    class="text-blue-500 hover:underline">muhammadshafad445@gmail.com</a>
+                            </li>
+                            <li><strong>Phone:</strong> +91 9074505209</li>
+
+                        </ul>
+                    </div>
+                    <!-- Right Section -->
+                    <div class="md:w-2/3 mt-10">
+                        <p class="text-gray-700 text-lg mb-4">
+                            Hi! I'm Muhammad Shafad K.K, a passionate MERN stack developer with a strong foundation in
+                            web development. I recently completed my Diploma in Computer Science, where I developed a
+                            keen interest in building dynamic and responsive web applications.
+                        </p>
+                        <p class="text-gray-700 text-lg">
+                            I am currently working as a Computer Lab Instructor in Al Ameen Engineering
+                            College,Kulapully.I am also MEARN Full Stack Intern at Luminar Technolab on side.
+                        </p>
+                        <!-- Social Media Links -->
+                        <div class="flex space-x-4 mt-6">
+                            <a href="https://github.com/MuhammadShafad" class="text-2xl hover:text-gray-500"><i
+                                    class="fa-brands fa-github"></i></a>
+                            <a href="https://www.instagram.com/shafaaad_/" class="text-2xl hover:text-gray-500"><i
+                                    class="fa-brands fa-instagram"></i></a>
+                            <a href="https://wa.me/919074505209" class="text-2xl hover:text-gray-500 whatsapp-link"><i
+                                    class="fa-brands fa-whatsapp"></i></i></a>
+                            <a href="https://www.linkedin.com/in/muhammadshafadkk/"
+                                class="text-2xl hover:text-gray-500"><i class="fa-brands fa-linkedin"></i></a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Skill Section-->
+            <div class="bg-gray-500 text-white flex flex-col items-center justify-center min-h-screen" id="skills">
+                <h1 class="text-4xl font-bold mb-8">My Skills</h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-20 px-4 py-4 md:px-0">
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 98;" data-percentage="98"></div>
+                        <p class="mt-2 text-black font-bold">HTML</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 95;" data-percentage="95"></div>
+                        <p class="mt-2 text-black font-bold">CSS</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 45;" data-percentage="45"></div>
+                        <p class="mt-2 text-black font-bold">JavaScript</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 89;" data-percentage="89"></div>
+                        <p class="mt-2 text-black font-bold">Bootstrap</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 80;" data-percentage="80"></div>
+                        <p class="mt-2 text-black font-bold">TailwindCSS</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 70;" data-percentage="70"></div>
+                        <p class="mt-2 text-black font-bold">Flutter</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 74;" data-percentage="74"></div>
+                        <p class="mt-2 text-black font-bold">Dart</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="circle" style="--percentage: 98;" data-percentage="98"></div>
+                        <p class="mt-2 text-black font-bold">Communication</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--Project Section-->
+            <div class="bg-gray-500 text-white min-h-screen flex justify-center items-center" id="projects">
+                <div class="container mx-auto p-6">
+                    <h1 class="text-4xl font-bold text-center mb-12">My Projects</h1>
+                    <!-- Card Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/eduonline.jpg"
+                                    alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300" >
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Responsive Online Education Platform Website</h5>
+                                <p class="text-gray-400 mb-6">It is a responsive online education platform website using
+                                    HTML, CSS and Bootstrap.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://online-education-platform-website.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Online-Education-Platform-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/ecotravel.jpg"
+                                    alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Travel Event Management Website</h5>
+                                <p class="text-gray-400 mb-6">It is a travel event management website using Html and
+                                    TailwindCSS.It is a group project.Group have 6 members.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://responsive-travel-event-management-website.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Responsive-Travel-Event-Management-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/jewellery.jpg"
+                                    alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Responsive Jewellery Website
+                                </h5>
+                                <p class="text-gray-400 mb-6">It is a jewellery website using Html, CSS and responsive
+                                    using Bootstrap. It is a group project. Group have 5 members.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://responsive-jewellery-website.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Responsive-Jewellery-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Card 4-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/mobilestore.jpg"
+                                    alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Responsive Mobile Store Website</h5>
+                                <p class="text-gray-400 mb-6">It is a responsive mobile store website using html, css
+                                    and responsive using bootstrap and a little bit of media query.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://responsive-mobile-store-website.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Responsive-Mobile-Store-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Card 5-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/restaurant.jpg" alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Responsive Restaurant Website</h5>
+                                <p class="text-gray-400 mb-6">It is a responsive restaurant website using html, css and
+                                    responsive using media query.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://responsive-restaurant-website-one.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Responsive-Restaurant-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Card 6-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300">
+                            <div class="relative">
+                                <img src="./images/portfolio.jpg" alt="Project video"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Personal Portfolio Website</h5>
+                                <p class="text-gray-400 mb-6">It is a personal portfolio website using html and css.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://personal-portfolio-website-shafad.netlify.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Personal-Portfolio-Website.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Card 7-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 mb-lg-20">
+                            <div class="relative">
+                                <img src="./images/github.jpg" alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">GitHub Login Page</h5>
+                                <p class="text-gray-400 mb-6">It is recreation of GitHub login page using HTML and CSS.
+                                </p>
+                                <div class="flex justify-between">
+                                    <a href="https://login-page-git-hub.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Login-Page-GitHub.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Card 8-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 mb-lg-20">
+                            <div class="relative">
+                                <img src="./images/facebook.jpg" alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Facebook Login Page</h5>
+                                <p class="text-gray-400 mb-6">It is recreation of Facebook login page using HTML and
+                                    CSS.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://login-page-facebook.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Login-Page-Facebook.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Card 9-->
+                        <div
+                            class="card bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 mb-lg-20">
+                            <div class="relative">
+                                <img src="./images/petstore.jpg"
+                                    alt="Project Image"
+                                    class="w-full h-48 object-cover transition-transform duration-300">
+                            </div>
+                            <div class="p-6">
+                                <h5 class="text-xl font-semibold mb-3">Online Pet Store Website</h5>
+                                <p class="text-gray-400 mb-6">It is an online pet store website only using html.</p>
+                                <div class="flex justify-between">
+                                    <a href="https://online-pet-store-html.vercel.app/"
+                                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-white hover:text-black shadow-lg transition">Live
+                                        Demo</a>
+                                    <a href="https://github.com/MuhammadShafad/Online-pet-store_HTML.git"
+                                        class="bg-white text-black px-6 py-2 rounded-full hover:bg-black hover:text-white shadow-lg transition">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Certicates Section-->
+            <div class="p-8" id="certificates">
+                <h1 class="text-4xl font-bold text-center text-white mb-12 mt-6">My Certificates</h1>
+
+                <div class="flex flex-wrap justify-center gap-8">
+                    <!-- Image 1 -->
+                    <div class="image-container">
+                        <img src="./images/avodha.jpg" alt="Image 1" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion the course
+                                of Flutter in AVODHA Institute through online.</p>
+                            <a href="./documents/Muhammad Shafad KK .pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+
+                    <!-- Image 2 -->
+                    <div class="image-container">
+                        <img src="./images/courseera.jpg" alt="Image 2" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion online
+                                course of Python for Data Science, AI & Development in IBM Coursera.</p>
+                            <a href="./documents/Coursera Certificate (1).pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+
+                    <!-- Image 3 -->
+                    <div class="image-container">
+                        <img src="./images/ihrd.jpg" alt="Image 3" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online
+                                one day class of Generative Artificial Intelligence and The Future of Education.</p>
+                            <a href="./documents/Shafad_IHRD.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+
+                    <!-- Image 4 -->
+                    <div class="image-container">
+                        <img src="./images/python.jpg" alt="Image 4" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online 7
+                                days bootcamp of Frontend Development With React.js and javascript.</p>
+                            <a href="./documents/1PWP6s.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                    <!-- Image 5 -->
+                    <div class="image-container">
+                        <img src="./images/python1.jpg" alt="Image 5" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online 7
+                                days bootcamp of Python and Artificial Intelligence.</p>
+                            <a href="./documents/Python and AI certificate -1.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                    <!-- Image 6 -->
+                    <div class="image-container">
+                        <img src="./images/devops.jpg" alt="Image 6" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online 7
+                                days bootcamp of learn DevOps for Web Development.</p>
+                            <a href="./documents/DEVOPS DEVTOWN CERTIFICATE 2.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                    <!-- Image 7 -->
+                    <div class="image-container">
+                        <img src="./images/insta.jpg" alt="Image 7" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online 7
+                                days bootcamp of Instagram Clone using HTML, CSS & JavaScript.</p>
+                            <a href="./documents/devtown Instagram certificate 2.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                    <!-- Image 8 -->
+                    <div class="image-container">
+                        <img src="./images/hackathon.jpg" alt="Image 8" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of offline
+                                one day workshop of Flutter Hackathon.</p>
+                            <a href="./documents/MUHAMMAD SHAFAD K K (1).pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                    <!-- Image 9 -->
+                    <div class="image-container">
+                        <img src="./images/develop.jpg" alt="Image 9" class="w-full h-full object-cover rounded-lg">
+                        <div class="overlay1">
+                            <p class="text-md font-bold fade-in1">This is the certificate of the completion of online
+                                one day class of Flutter Developer.</p>
+                            <a href="./documents/Workshop__Career_path_to_become_a_Flutter_Developer_Certificate_Muhammad__Shafad_07122023063251.pdf"
+                                class="mt-6 inline-block px-6 py-2 bg-black text-white font-semibold rounded hover:bg-white hover:text-black"
+                                download>Download Certificate</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Contact Section-->
+            <div class="overflow-x-hidden" id="contact">
+                <div class="max-w-7xl mx-auto p-6">
+                    <!-- Header -->
+                    <h2 class="text-xl font-bold text-black mb-6">// GET IN TOUCH</h2>
+            
+                    <!-- Contact Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-gray-700 text-2xl mb-2"><i class="fa-solid fa-location-dot"></i></div>
+                            <p class="text-black">Karalmanna, Cherpulassery, Kerala</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-gray-700 text-2xl mb-2"><i class="fa-solid fa-phone"></i></div>
+                            <p class="text-black">+91 9074505209</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-gray-700 text-2xl mb-2"><i class="fa-solid fa-envelope"></i></div>
+                            <p class="text-black">muhammadshafad445@gmail.com</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-gray-700 text-2xl mb-2"><i class="fa-solid fa-comments"></i></div>
+                            <!-- <p class="text-black">Social Media</p> -->
+                            <div class="text-xl">
+                                <a href="https://github.com/MuhammadShafad" class="hover:text-white"><i
+                                    class="fa-brands fa-github"></i></a>
+                            <!-- <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a> -->
+                            <a href="https://www.instagram.com/shafaaad_/" class="hover:text-white"><i
+                                    class="fa-brands fa-instagram"></i></a>
+                            <a href="https://wa.me/919074505209" class="hover:text-white whatsapp-link"><i
+                                    class="fa-brands fa-whatsapp"></i></i></a>
+                            <a href="https://www.linkedin.com/in/muhammadshafadkk/" class="hover:text-white"><i
+                                    class="fa-brands fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Form -->
+                    <form class="bg-white p-6 rounded-lg shadow-md space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Name" class="border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <input type="email" placeholder="Email" class="border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <input type="tel" placeholder="Phone" class="border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <input type="text" placeholder="Address" class="border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            
+                        </div>
+                        <textarea rows="4" placeholder="Message" class="w-full border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0">
+                            <input type="text" placeholder="679506" class="border border-gray-500 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <button type="submit" class="bg-black text-white px-6 py-3 rounded-lg hover:bg-white hover:text-black">Send Message</button>
+                        </div>
+                    </form>
+            
+                    <!-- Map -->
+                    <div class="mt-8">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3917.822244799862!2d76.310092!3d10.90111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTDCsDU0JzA0LjAiTiA3NsKwMTgnMzYuMyJF!5e0!3m2!1sen!2sin!4v1735663703636!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!--Footer-->
+            <footer class="py-4 mt-12">
+                <div class="text-center text-black text-sm">
+                    <p>&copy; Copyright 2024. All Rights Reserved</p>
+                    <p class="mt-1">
+                        Designed by <span class="font-bold">Muhammad Shafad K.K</span></a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Font Awesome Icons -->
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script>
+            function toggleSidebar() {
+                const sidebar = document.querySelector('.sidebar');
+                const overlay = document.querySelector('#overlay');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+        </script>
+</body>
+
+</html>
